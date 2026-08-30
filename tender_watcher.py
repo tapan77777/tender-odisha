@@ -494,8 +494,8 @@ def main() -> int:
         + (" (first run -- seeding only, no alerts)" if first_run else "")
     )
 
-    all_tender_keys = list(seen_tenders | {t["key"] for t in tenders})[-MAX_KEYS_KEPT:]
-    all_corr_keys = list(seen_corrs | {c["key"] for c in corrigendums})[-MAX_KEYS_KEPT:]
+    all_tender_keys = sorted(seen_tenders | {t["key"] for t in tenders})[-MAX_KEYS_KEPT:]
+    all_corr_keys = sorted(seen_corrs | {c["key"] for c in corrigendums})[-MAX_KEYS_KEPT:]
     state["tenders"] = all_tender_keys
     state["corrigendums"] = all_corr_keys
     save_state(state)
