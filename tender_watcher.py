@@ -21,6 +21,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -80,45 +81,75 @@ def fetch_html(session: requests.Session) -> str:
     return resp.text
 
 
-def extract_section(soup: BeautifulSoup, header_keywords: list[str]) -> list[dict]:
+def extract_section(soup: BeautifulSoup, header_labels: list[str]) -> list[dict]:
     """
-    Find the table whose text contains all of header_keywords (e.g.
-    ["Tender Title", "Reference No", "Closing Date"]) and pull out each
-    row as a dict. Matches on header text rather than a hardcoded CSS
-    selector/class, since the exact markup couldn't be verified ahead
-    of time from outside the site.
+    Find the <tr> whose four direct-child cells match `header_labels`
+    exactly, then walk that header row's parent table and pull each
+    proper 4-cell data row below it.
+
+    Two subtleties this handles that a naive "find a table containing
+    these keywords" approach doesn't:
+
+    1. The homepage nests many tables inside one another (classic 90s
+       markup). Every outer wrapper's aggregate text contains the
+       header words, so keyword-matching on tables mis-picks the outer
+       chrome. Matching on the header ROW (via its direct-child cells)
+       lands on the actual listing.
+    2. The 10 tender rows live inside a scrolling marquee <div> that
+       sits in a single <td colspan="4">. Naive row.find_all("td")
+       recurses through that td and returns 41 cells for one wrapper
+       row, which then gets mis-parsed. `recursive=False` on the cell
+       lookup keeps each row's own direct cells only.
+
+    The per-row href carries a short-lived session token, so we key on
+    content (title|ref_no|closing_date), not on the URL.
     """
-    items = []
-    for table in soup.find_all("table"):
-        header_text = table.get_text(" ", strip=True)
-        if all(kw.lower() in header_text.lower() for kw in header_keywords):
-            for row in table.find_all("tr"):
-                cells = row.find_all("td")
-                if len(cells) < 4:
-                    continue
-                link = cells[0].find("a")
-                if not link:
-                    continue
-                title = link.get_text(strip=True)
-                if not title or "title" in title.lower()[:20]:
-                    continue
-                href = link.get("href", "")
-                ref_no = cells[1].get_text(strip=True)
-                closing_date = cells[2].get_text(strip=True)
-                opening_date = cells[3].get_text(strip=True)
-                url = urljoin(HOME_URL, href) if href else ""
-                key = href or f"{title}|{ref_no}|{closing_date}"
-                items.append(
-                    {
-                        "title": title,
-                        "url": url,
-                        "ref_no": ref_no,
-                        "closing_date": closing_date,
-                        "opening_date": opening_date,
-                        "key": key,
-                    }
-                )
+    header_row = None
+    for tr in soup.find_all("tr"):
+        cells = tr.find_all(["td", "th"], recursive=False)
+        if len(cells) != 4:
+            continue
+        texts = [c.get_text(" ", strip=True) for c in cells]
+        if all(a.lower() == b.lower() for a, b in zip(texts, header_labels)):
+            header_row = tr
             break
+    if header_row is None:
+        return []
+
+    table = header_row.find_parent("table")
+    items, seen = [], set()
+    for row in table.find_all("tr"):
+        if row is header_row:
+            continue
+        cells = row.find_all("td", recursive=False)
+        if len(cells) != 4:
+            continue
+        link = cells[0].find("a")
+        raw_title = cells[0].get_text(" ", strip=True)
+        # strip a leading ordinal like "1. " / "12. " that the portal
+        # prepends for display but that isn't part of the actual title
+        title = re.sub(r"^\d+\.\s*", "", raw_title).strip()
+        if not title:
+            continue
+        href = link.get("href", "") if link else ""
+        ref_no = cells[1].get_text(" ", strip=True)
+        closing_date = cells[2].get_text(" ", strip=True)
+        opening_date = cells[3].get_text(" ", strip=True)
+        url = urljoin(HOME_URL, href) if href else ""
+        key = f"{title}|{ref_no}|{closing_date}"
+        if key in seen:
+            continue
+        seen.add(key)
+        items.append(
+            {
+                "title": title,
+                "url": url,
+                "ref_no": ref_no,
+                "closing_date": closing_date,
+                "opening_date": opening_date,
+                "key": key,
+            }
+        )
     return items
 
 
@@ -455,9 +486,11 @@ def main() -> int:
     html = fetch_html(session)
     soup = BeautifulSoup(html, "html.parser")
 
-    tenders = extract_section(soup, ["Tender Title", "Reference No", "Closing Date"])
+    tenders = extract_section(
+        soup, ["Tender Title", "Reference No", "Closing Date", "Bid Opening Date"]
+    )
     corrigendums = extract_section(
-        soup, ["Corrigendum Title", "Reference No", "Closing Date"]
+        soup, ["Corrigendum Title", "Reference No", "Closing Date", "Bid Opening Date"]
     )
 
     if not tenders and not corrigendums:
