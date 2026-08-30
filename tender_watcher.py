@@ -263,7 +263,11 @@ def ocr_pdf(pdf_bytes: bytes) -> str:
 def summarize_with_claude(api_key: str, listing: dict, doc_text: str) -> dict:
     from anthropic import Anthropic
 
-    client = Anthropic(api_key=api_key)
+    workspace_id = os.environ.get("ANTHROPIC_WORKSPACE_ID")
+    client = Anthropic(
+        api_key=api_key,
+        default_headers={"anthropic-workspace-id": workspace_id} if workspace_id else {},
+    )
     doc_text = (doc_text or "").strip()[:MAX_DOC_CHARS]
 
     if doc_text:
