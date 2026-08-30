@@ -21,7 +21,6 @@ import hashlib
 import io
 import json
 import os
-import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -39,9 +38,11 @@ DOCS_DIR = ROOT / "docs"
 DATA_DIR = DOCS_DIR / "data"
 PDF_DIR = DATA_DIR / "pdfs"
 INDEX_FILE = DATA_DIR / "index.json"
+FEED_FILE = DATA_DIR / "feed.json"
 
 MAX_KEYS_KEPT = 500       # bound state.json size
-MAX_INDEX_RECORDS = 500   # bound the dashboard's index.json size
+MAX_INDEX_RECORDS = 500   # bound the dashboard's index.json (tracker) size
+MAX_FEED_RECORDS = 1000   # bound the dashboard's feed.json (raw/all) size
 MAX_DOC_CHARS = 12000     # cap text sent to Claude per document
 MAX_OCR_PAGES = 6         # cap pages OCR'd for scanned documents
 TELEGRAM_CHUNK = 3800
@@ -79,59 +80,45 @@ def fetch_html(session: requests.Session) -> str:
     return resp.text
 
 
-def extract_section(soup: BeautifulSoup, header_label: str) -> list[dict]:
+def extract_section(soup: BeautifulSoup, header_keywords: list[str]) -> list[dict]:
     """
-    Locate the listing table by its header row -- a <tr> whose four cells
-    read exactly "<header_label>", "Reference No", "Closing Date",
-    "Bid Opening Date" -- then read the sibling 4-cell rows below it. The
-    homepage nests many tables inside one another, so matching the header
-    row (rather than the first table that merely *contains* those words)
-    is what keeps this from scraping the page chrome.
+    Find the table whose text contains all of header_keywords (e.g.
+    ["Tender Title", "Reference No", "Closing Date"]) and pull out each
+    row as a dict. Matches on header text rather than a hardcoded CSS
+    selector/class, since the exact markup couldn't be verified ahead
+    of time from outside the site.
     """
-    header_row = None
-    for tr in soup.find_all("tr"):
-        cells = [c.get_text(" ", strip=True) for c in tr.find_all(["td", "th"])]
-        if len(cells) == 4 and cells[0].lower() == header_label.lower():
-            header_row = tr
+    items = []
+    for table in soup.find_all("table"):
+        header_text = table.get_text(" ", strip=True)
+        if all(kw.lower() in header_text.lower() for kw in header_keywords):
+            for row in table.find_all("tr"):
+                cells = row.find_all("td")
+                if len(cells) < 4:
+                    continue
+                link = cells[0].find("a")
+                if not link:
+                    continue
+                title = link.get_text(strip=True)
+                if not title or "title" in title.lower()[:20]:
+                    continue
+                href = link.get("href", "")
+                ref_no = cells[1].get_text(strip=True)
+                closing_date = cells[2].get_text(strip=True)
+                opening_date = cells[3].get_text(strip=True)
+                url = urljoin(HOME_URL, href) if href else ""
+                key = href or f"{title}|{ref_no}|{closing_date}"
+                items.append(
+                    {
+                        "title": title,
+                        "url": url,
+                        "ref_no": ref_no,
+                        "closing_date": closing_date,
+                        "opening_date": opening_date,
+                        "key": key,
+                    }
+                )
             break
-    if header_row is None:
-        return []
-
-    table = header_row.find_parent("table")
-    items, seen = [], set()
-    for row in table.find_all("tr"):
-        cells = row.find_all("td")
-        if len(cells) != 4:
-            continue
-        link = cells[0].find("a")
-        raw_title = cells[0].get_text(" ", strip=True)
-        # drop the header row and the "1. " / "2. " ordinal prefix
-        if raw_title.lower() == header_label.lower():
-            continue
-        title = re.sub(r"^\d+\.\s*", "", raw_title)
-        if not title:
-            continue
-        href = link.get("href", "") if link else ""
-        ref_no = cells[1].get_text(" ", strip=True)
-        closing_date = cells[2].get_text(" ", strip=True)
-        opening_date = cells[3].get_text(" ", strip=True)
-        url = urljoin(HOME_URL, href) if href else ""
-        # the homepage's per-row links carry a short-lived session token,
-        # so they're useless as a stable identity -- key on the content
-        key = f"{title}|{ref_no}|{closing_date}"
-        if key in seen:
-            continue
-        seen.add(key)
-        items.append(
-            {
-                "title": title,
-                "url": url,
-                "ref_no": ref_no,
-                "closing_date": closing_date,
-                "opening_date": opening_date,
-                "key": key,
-            }
-        )
     return items
 
 
@@ -318,6 +305,17 @@ def save_index(records: list) -> None:
     INDEX_FILE.write_text(json.dumps(records, indent=2, ensure_ascii=False))
 
 
+def load_feed() -> list:
+    if FEED_FILE.exists():
+        return json.loads(FEED_FILE.read_text())
+    return []
+
+
+def save_feed(records: list) -> None:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    FEED_FILE.write_text(json.dumps(records, indent=2, ensure_ascii=False))
+
+
 def record_id_for(key: str) -> str:
     return hashlib.sha1(key.encode("utf-8")).hexdigest()[:12]
 
@@ -379,13 +377,34 @@ def save_state(state: dict) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Processing a single matched item end-to-end
+# Processing a single item end-to-end
 # ---------------------------------------------------------------------------
 
-def process_matched_item(session, api_key, item, kind) -> dict:
-    print("  fetching document...")
-    pdf_bytes = fetch_pdf(session, item["url"])
+def build_feed_record(item, kind, rid, pdf_path, matched) -> dict:
+    """Lightweight record for the raw/unfiltered 'All Tenders' section --
+    no AI summary, just what was actually seen and whether the filter
+    flagged it. Built for every new item, matched or not, so the
+    dashboard can confirm the scraper itself is working independent of
+    the construction filter or the summarizer."""
+    return {
+        "id": rid,
+        "kind": kind,
+        "title": item["title"],
+        "ref_no": item["ref_no"],
+        "closing_date": item["closing_date"],
+        "opening_date": item["opening_date"],
+        "portal_url": item["url"],
+        "pdf_path": pdf_path,
+        "matched": matched,
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
+    }
 
+
+def process_matched_item(api_key, item, kind, rid, pdf_bytes, pdf_path) -> dict:
+    """Full pipeline for a construction-matched item: extract + summarize.
+    Takes the already-fetched pdf_bytes/pdf_path rather than fetching
+    again -- the caller fetches once and reuses it for both the feed
+    record and this tracker record."""
     if pdf_bytes:
         print(f"  extracting text ({len(pdf_bytes)} bytes)...")
         doc_text = extract_pdf_text(pdf_bytes)
@@ -395,9 +414,6 @@ def process_matched_item(session, api_key, item, kind) -> dict:
 
     print("  summarizing with Claude...")
     summary = summarize_with_claude(api_key, item, doc_text)
-
-    rid = record_id_for(item["key"])
-    pdf_path = save_pdf(rid, pdf_bytes) if pdf_bytes else None
 
     record = {
         "id": rid,
@@ -439,8 +455,10 @@ def main() -> int:
     html = fetch_html(session)
     soup = BeautifulSoup(html, "html.parser")
 
-    tenders = extract_section(soup, "Tender Title")
-    corrigendums = extract_section(soup, "Corrigendum Title")
+    tenders = extract_section(soup, ["Tender Title", "Reference No", "Closing Date"])
+    corrigendums = extract_section(
+        soup, ["Corrigendum Title", "Reference No", "Closing Date"]
+    )
 
     if not tenders and not corrigendums:
         print(
@@ -459,20 +477,38 @@ def main() -> int:
     new_corrs = [c for c in corrigendums if c["key"] not in seen_corrs]
 
     index_records = load_index()
-    processed, matched, alerted = 0, 0, 0
+    feed_records = load_feed()
+    processed, matched, alerted, pdf_found = 0, 0, 0, 0
 
     for item, kind in [(t, "tender") for t in new_tenders] + [
         (c, "corrigendum") for c in new_corrs
     ]:
         processed += 1
-        if not is_construction_related(item["title"]):
+        is_match = is_construction_related(item["title"])
+        print(f"seen ({kind}, {'matched' if is_match else 'not matched'}): {item['title'][:70]}")
+
+        rid = record_id_for(item["key"])
+        try:
+            pdf_bytes = fetch_pdf(session, item["url"])
+        except Exception as e:
+            print(f"  document fetch failed, continuing without a PDF: {e}", file=sys.stderr)
+            pdf_bytes = None
+        pdf_path = save_pdf(rid, pdf_bytes) if pdf_bytes else None
+        if pdf_path:
+            pdf_found += 1
+
+        # every new item gets a lightweight raw-feed entry, matched or not
+        feed_records.insert(0, build_feed_record(item, kind, rid, pdf_path, is_match))
+
+        if not is_match:
             continue
         matched += 1
-        print(f"processing ({kind}): {item['title'][:70]}")
+
+        print("  summarizing with Claude...")
         try:
-            record = process_matched_item(session, api_key, item, kind)
+            record = process_matched_item(api_key, item, kind, rid, pdf_bytes, pdf_path)
         except Exception as e:
-            print(f"  failed to process this item, skipping: {e}", file=sys.stderr)
+            print(f"  failed to summarize this item, skipping tracker entry: {e}", file=sys.stderr)
             continue
 
         index_records.insert(0, record)
@@ -487,13 +523,19 @@ def main() -> int:
                 print(f"  failed to send Telegram alert: {e}", file=sys.stderr)
 
     save_index(index_records[:MAX_INDEX_RECORDS])
+    save_feed(feed_records[:MAX_FEED_RECORDS])
 
     print(
-        f"Run summary: {processed} new item(s) seen, {matched} construction-related, "
-        f"{alerted} Telegram alert(s) sent."
+        f"Run summary: {processed} new item(s) seen, {pdf_found} PDF(s) found, "
+        f"{matched} construction-related, {alerted} Telegram alert(s) sent."
         + (" (first run -- seeding only, no alerts)" if first_run else "")
     )
 
+    # sorted() rather than list() -- Python's set iteration order isn't
+    # stable across process runs, which would otherwise make state.json
+    # "change" on every single run even when nothing new happened,
+    # triggering a pointless git commit (and a pointless redeploy on
+    # anything watching this repo, e.g. Vercel) every 15 minutes
     all_tender_keys = sorted(seen_tenders | {t["key"] for t in tenders})[-MAX_KEYS_KEPT:]
     all_corr_keys = sorted(seen_corrs | {c["key"] for c in corrigendums})[-MAX_KEYS_KEPT:]
     state["tenders"] = all_tender_keys

@@ -102,7 +102,13 @@
     margin: 0 auto;
   }
 
-  .toolbar { margin-bottom: 16px; }
+  .toolbar {
+    margin-bottom: 16px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
   #search {
     width: 100%;
     max-width: 420px;
@@ -119,6 +125,46 @@
     outline-offset: 1px;
   }
   #search::placeholder { color: #6B7A8A; }
+
+  .tabs {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+  .tab {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    color: #9DAAB8;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .tab[aria-selected="true"] {
+    background: var(--orange);
+    color: var(--navy-deep);
+  }
+  .tab:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .badge--yes { background: #DCE9E6; color: #2E6B5E; }
+  .badge--no { background: #EDE0D3; color: #9C7A4A; }
 
   table {
     width: 100%;
@@ -240,36 +286,62 @@
       </div>
     </div>
     <dl class="titleblock__meta">
-      <div><dt>Tracked</dt><dd id="meta-count">—</dd></div>
-      <div><dt>Category</dt><dd>Construction</dd></div>
+      <div><dt>Tracker</dt><dd id="meta-count">—</dd></div>
+      <div><dt>All seen</dt><dd id="meta-feed-count">—</dd></div>
       <div><dt>Updated</dt><dd id="meta-updated">—</dd></div>
     </dl>
   </header>
 
   <main>
     <div class="toolbar">
+      <div class="tabs" role="tablist" aria-label="Dashboard view">
+        <button class="tab" id="tab-tracker" role="tab" aria-selected="true" aria-controls="panel-tracker">Tracker</button>
+        <button class="tab" id="tab-feed" role="tab" aria-selected="false" aria-controls="panel-feed">All Tenders</button>
+      </div>
       <input id="search" type="search" placeholder="Search by title, department, district…" aria-label="Search tenders">
     </div>
 
-    <div id="empty" class="empty" hidden>
-      <p>No tenders tracked yet</p>
-      <p class="empty__sub">The watcher checks every 15 minutes — this page fills in automatically once a construction-related tender comes through.</p>
-    </div>
+    <section id="panel-tracker" role="tabpanel" aria-labelledby="tab-tracker">
+      <div id="empty-tracker" class="empty" hidden>
+        <p>No tenders tracked yet</p>
+        <p class="empty__sub">The watcher checks every 15 minutes — this fills in automatically once a construction-related tender comes through, complete with an AI summary.</p>
+      </div>
 
-    <table id="table">
-      <thead>
-        <tr>
-          <th>Tender</th>
-          <th>Value</th>
-          <th>EMD</th>
-          <th>Eligibility</th>
-          <th>Closes</th>
-          <th>Verdict</th>
-          <th>Document</th>
-        </tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table>
+      <table id="table-tracker">
+        <thead>
+          <tr>
+            <th>Tender</th>
+            <th>Value</th>
+            <th>EMD</th>
+            <th>Eligibility</th>
+            <th>Closes</th>
+            <th>Verdict</th>
+            <th>Document</th>
+          </tr>
+        </thead>
+        <tbody id="rows-tracker"></tbody>
+      </table>
+    </section>
+
+    <section id="panel-feed" role="tabpanel" aria-labelledby="tab-feed" hidden>
+      <div id="empty-feed" class="empty" hidden>
+        <p>Nothing seen yet</p>
+        <p class="empty__sub">Every tender and corrigendum the watcher finds on the portal shows up here, whether or not it matched the construction filter — use this to confirm the scraper itself is working.</p>
+      </div>
+
+      <table id="table-feed">
+        <thead>
+          <tr>
+            <th>Tender</th>
+            <th>Kind</th>
+            <th>Closes</th>
+            <th>Matched filter?</th>
+            <th>Document</th>
+          </tr>
+        </thead>
+        <tbody id="rows-feed"></tbody>
+      </table>
+    </section>
   </main>
 
   <script>
@@ -279,67 +351,134 @@
       }[c]));
     }
 
-    async function init() {
-      let records = [];
-      try {
-        const res = await fetch('data/index.json', { cache: 'no-store' });
-        if (res.ok) records = await res.json();
-      } catch (e) {
-        // leave records empty -- empty state handles this
-      }
+    function pdfCell(r) {
+      return r.pdf_path
+        ? `<a class="pdf-link" href="${escapeHtml(r.pdf_path)}" target="_blank" rel="noopener">View / Download</a>`
+        : `<span class="pdf-link pdf-link--off">No PDF</span>`;
+    }
 
-      document.getElementById('meta-count').textContent = records.length;
-      document.getElementById('meta-updated').textContent = records[0]?.fetched_at
-        ? new Date(records[0].fetched_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+    function renderTracker(list, tbody, empty, table) {
+      tbody.innerHTML = '';
+      if (!list.length) {
+        table.hidden = true;
+        empty.hidden = false;
+        return;
+      }
+      table.hidden = false;
+      empty.hidden = true;
+      for (const r of list) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td data-label="Tender">
+            <div class="cell-title">${escapeHtml(r.title)}</div>
+            <div class="cell-sub">${escapeHtml(r.ref_no)} · ${escapeHtml(r.department_or_location)}
+              <span class="tag tag--${r.kind}">${escapeHtml(r.kind)}</span>
+            </div>
+          </td>
+          <td data-label="Value" class="mono">${escapeHtml(r.estimated_value || '—')}</td>
+          <td data-label="EMD" class="mono">${escapeHtml(r.emd_amount || '—')}</td>
+          <td data-label="Eligibility">${escapeHtml(r.eligibility || '—')}</td>
+          <td data-label="Closes" class="mono">${escapeHtml(r.closing_date || '—')}</td>
+          <td data-label="Verdict"><span class="verdict">${escapeHtml(r.verdict || '—')}</span></td>
+          <td data-label="Document">${pdfCell(r)}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function renderFeed(list, tbody, empty, table) {
+      tbody.innerHTML = '';
+      if (!list.length) {
+        table.hidden = true;
+        empty.hidden = false;
+        return;
+      }
+      table.hidden = false;
+      empty.hidden = true;
+      for (const r of list) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td data-label="Tender">
+            <div class="cell-title">${escapeHtml(r.title)}</div>
+            <div class="cell-sub">${escapeHtml(r.ref_no)}</div>
+          </td>
+          <td data-label="Kind"><span class="tag tag--${r.kind}">${escapeHtml(r.kind)}</span></td>
+          <td data-label="Closes" class="mono">${escapeHtml(r.closing_date || '—')}</td>
+          <td data-label="Matched filter?"><span class="badge badge--${r.matched ? 'yes' : 'no'}">${r.matched ? 'Matched' : 'Not matched'}</span></td>
+          <td data-label="Document">${pdfCell(r)}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    async function loadJson(path) {
+      try {
+        const res = await fetch(path, { cache: 'no-store' });
+        if (res.ok) return await res.json();
+      } catch (e) {
+        // fall through to empty
+      }
+      return [];
+    }
+
+    async function init() {
+      const [trackerRecords, feedRecords] = await Promise.all([
+        loadJson('data/index.json'),
+        loadJson('data/feed.json'),
+      ]);
+
+      document.getElementById('meta-count').textContent = trackerRecords.length;
+      document.getElementById('meta-feed-count').textContent = feedRecords.length;
+      const latest = trackerRecords[0]?.fetched_at || feedRecords[0]?.fetched_at;
+      document.getElementById('meta-updated').textContent = latest
+        ? new Date(latest).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
         : '—';
 
-      const tbody = document.getElementById('rows');
-      const empty = document.getElementById('empty');
-      const table = document.getElementById('table');
+      const trackerTbody = document.getElementById('rows-tracker');
+      const trackerEmpty = document.getElementById('empty-tracker');
+      const trackerTable = document.getElementById('table-tracker');
 
-      function render(list) {
-        tbody.innerHTML = '';
-        if (!list.length) {
-          table.hidden = true;
-          empty.hidden = false;
-          return;
-        }
-        table.hidden = false;
-        empty.hidden = true;
-        for (const r of list) {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td data-label="Tender">
-              <div class="cell-title">${escapeHtml(r.title)}</div>
-              <div class="cell-sub">${escapeHtml(r.ref_no)} · ${escapeHtml(r.department_or_location)}
-                <span class="tag tag--${r.kind}">${escapeHtml(r.kind)}</span>
-              </div>
-            </td>
-            <td data-label="Value" class="mono">${escapeHtml(r.estimated_value || '—')}</td>
-            <td data-label="EMD" class="mono">${escapeHtml(r.emd_amount || '—')}</td>
-            <td data-label="Eligibility">${escapeHtml(r.eligibility || '—')}</td>
-            <td data-label="Closes" class="mono">${escapeHtml(r.closing_date || '—')}</td>
-            <td data-label="Verdict"><span class="verdict">${escapeHtml(r.verdict || '—')}</span></td>
-            <td data-label="Document">${
-              r.pdf_path
-                ? `<a class="pdf-link" href="${escapeHtml(r.pdf_path)}" target="_blank" rel="noopener">View PDF</a>`
-                : `<span class="pdf-link pdf-link--off">No PDF</span>`
-            }</td>
-          `;
-          tbody.appendChild(tr);
-        }
+      const feedTbody = document.getElementById('rows-feed');
+      const feedEmpty = document.getElementById('empty-feed');
+      const feedTable = document.getElementById('table-feed');
+
+      function applySearch(q) {
+        const query = q.toLowerCase();
+        renderTracker(
+          trackerRecords.filter(r =>
+            (r.title || '').toLowerCase().includes(query) ||
+            (r.department_or_location || '').toLowerCase().includes(query) ||
+            (r.ref_no || '').toLowerCase().includes(query)
+          ),
+          trackerTbody, trackerEmpty, trackerTable
+        );
+        renderFeed(
+          feedRecords.filter(r =>
+            (r.title || '').toLowerCase().includes(query) ||
+            (r.ref_no || '').toLowerCase().includes(query)
+          ),
+          feedTbody, feedEmpty, feedTable
+        );
       }
 
-      render(records);
+      applySearch('');
+      document.getElementById('search').addEventListener('input', (e) => applySearch(e.target.value));
 
-      document.getElementById('search').addEventListener('input', (e) => {
-        const q = e.target.value.toLowerCase();
-        render(records.filter(r =>
-          (r.title || '').toLowerCase().includes(q) ||
-          (r.department_or_location || '').toLowerCase().includes(q) ||
-          (r.ref_no || '').toLowerCase().includes(q)
-        ));
-      });
+      const tabTracker = document.getElementById('tab-tracker');
+      const tabFeed = document.getElementById('tab-feed');
+      const panelTracker = document.getElementById('panel-tracker');
+      const panelFeed = document.getElementById('panel-feed');
+
+      function selectTab(which) {
+        const trackerActive = which === 'tracker';
+        tabTracker.setAttribute('aria-selected', String(trackerActive));
+        tabFeed.setAttribute('aria-selected', String(!trackerActive));
+        panelTracker.hidden = !trackerActive;
+        panelFeed.hidden = trackerActive;
+      }
+
+      tabTracker.addEventListener('click', () => selectTab('tracker'));
+      tabFeed.addEventListener('click', () => selectTab('feed'));
     }
 
     init();
