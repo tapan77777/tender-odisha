@@ -35,6 +35,6 @@ jobs:
         run: |
           git config user.name "tender-watcher-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add state.json docs/data
+          git add state.json docs/data construction-keywords.txt
           git diff --cached --quiet || git commit -m "Update tender data"
           git push

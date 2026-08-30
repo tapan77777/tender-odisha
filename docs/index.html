@@ -357,6 +357,12 @@
         : `<span class="pdf-link pdf-link--off">No PDF</span>`;
     }
 
+    function portalCell(r) {
+      return r.portal_url
+        ? `<a class="pdf-link" href="${escapeHtml(r.portal_url)}" target="_blank" rel="noopener">View on Portal</a>`
+        : '';
+    }
+
     function renderTracker(list, tbody, empty, table) {
       tbody.innerHTML = '';
       if (!list.length) {
@@ -380,7 +386,7 @@
           <td data-label="Eligibility">${escapeHtml(r.eligibility || '—')}</td>
           <td data-label="Closes" class="mono">${escapeHtml(r.closing_date || '—')}</td>
           <td data-label="Verdict"><span class="verdict">${escapeHtml(r.verdict || '—')}</span></td>
-          <td data-label="Document">${pdfCell(r)}</td>
+          <td data-label="Document">${pdfCell(r)} ${portalCell(r)}</td>
         `;
         tbody.appendChild(tr);
       }
@@ -405,7 +411,7 @@
           <td data-label="Kind"><span class="tag tag--${r.kind}">${escapeHtml(r.kind)}</span></td>
           <td data-label="Closes" class="mono">${escapeHtml(r.closing_date || '—')}</td>
           <td data-label="Matched filter?"><span class="badge badge--${r.matched ? 'yes' : 'no'}">${r.matched ? 'Matched' : 'Not matched'}</span></td>
-          <td data-label="Document">${pdfCell(r)}</td>
+          <td data-label="Document">${pdfCell(r)} ${portalCell(r)}</td>
         `;
         tbody.appendChild(tr);
       }

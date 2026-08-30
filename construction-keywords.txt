@@ -1,0 +1,37 @@
+# One keyword per line. Lines starting with # are ignored. Matching is case-insensitive and matches anywhere in the title.
+road
+bridge
+culvert
+building
+construction
+rcc
+pwd
+embankment
+drainage
+check dam
+dam
+canal
+irrigation
+widening
+black topping
+blacktopping
+asphalt
+highway
+flyover
+housing
+repair
+renovation
+improvement
+upgradation
+strengthening
+retaining wall
+boundary wall
+compound wall
+wtp
+water supply
+sewerage
+civil work
+earth work
+footpath
+flooring
+structure

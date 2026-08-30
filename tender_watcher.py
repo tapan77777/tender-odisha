@@ -56,19 +56,23 @@ HEADERS = {
     )
 }
 
-# Keywords used to decide "is this civil-construction-related". Tune this
-# list freely -- it's the whole filter. Err on the side of over-matching;
-# a false positive just costs a few cents in wasted summarization, a false
+# Keywords used to decide "is this civil-construction-related". Tune the
+# list by editing construction-keywords.txt at the repo root -- no code
+# change or redeploy needed. Err on the side of over-matching; a false
+# positive just costs a few cents in wasted summarization, a false
 # negative means the tender never reaches the client at all.
-CONSTRUCTION_KEYWORDS = [
-    "road", "bridge", "culvert", "building", "construction", "rcc",
-    "pwd", "embankment", "drainage", "check dam", "dam ", "canal",
-    "irrigation", "widening", "black topping", "blacktopping", "asphalt",
-    "highway", "flyover", "housing", "repair", "renovation",
-    "improvement", "upgradation", "strengthening", "retaining wall",
-    "boundary wall", "compound wall", "wtp", "water supply", "sewerage",
-    "civil work", "earth work", "footpath", "flooring", "structure",
-]
+
+def load_construction_keywords() -> list[str]:
+    path = ROOT / "construction-keywords.txt"
+    if not path.exists():
+        return ["road", "bridge", "construction"]  # bare fallback
+    return [
+        line.strip().lower()
+        for line in path.read_text().splitlines()
+        if line.strip() and not line.strip().startswith("#")
+    ]
+
+CONSTRUCTION_KEYWORDS = load_construction_keywords()
 
 
 # ---------------------------------------------------------------------------
