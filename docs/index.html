@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tender Watch — Civil Construction, Odisha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #14293D;
+    --navy-deep: #0B1B29;
+    --paper: #F0ECDF;
+    --paper-hi: #F7F4E9;
+    --paper-line: #E0DAC4;
+    --ink: #16232F;
+    --ink-soft: #6B5B45;
+    --orange: #E8622C;
+    --teal: #4FA697;
+    --cream: #EDE7D9;
+    --line: rgba(237,231,217,0.12);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 32px 32px;
+    min-height: 100vh;
+  }
+
+  a { color: inherit; }
+
+  .titleblock {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--orange);
+    padding: 28px clamp(20px, 5vw, 56px) 20px;
+    background: var(--navy-deep);
+  }
+
+  .titleblock__brand { display: flex; align-items: center; gap: 14px; }
+  .titleblock__mark {
+    font-size: 22px;
+    color: var(--orange);
+    border: 1.5px solid var(--orange);
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    flex-shrink: 0;
+  }
+  .titleblock h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+  .titleblock__brand p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: #9DAAB8;
+  }
+
+  .titleblock__meta {
+    display: flex;
+    gap: 28px;
+    margin: 0;
+  }
+  .titleblock__meta dt {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #7C8CA0;
+    margin-bottom: 4px;
+  }
+  .titleblock__meta dd {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--cream);
+  }
+
+  main {
+    padding: 28px clamp(20px, 5vw, 56px) 64px;
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  .toolbar { margin-bottom: 16px; }
+  #search {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--navy-deep);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+  }
+  #search:focus {
+    outline: 2px solid var(--orange);
+    outline-offset: 1px;
+  }
+  #search::placeholder { color: #6B7A8A; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  thead th {
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    background: #E4DEC9;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--paper-line);
+    border-left: 3px solid transparent;
+  }
+  tbody tr:hover {
+    border-left-color: var(--orange);
+    background: var(--paper-hi);
+  }
+  tbody td {
+    padding: 14px;
+    font-size: 13.5px;
+    vertical-align: top;
+  }
+
+  .cell-title { font-weight: 500; margin-bottom: 3px; }
+  .cell-sub { font-size: 11.5px; color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; }
+
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+  .tag {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .tag--tender { background: #DCE9E6; color: #2E6B5E; }
+  .tag--corrigendum { background: #F3DFCB; color: #A15A25; }
+
+  .verdict {
+    display: inline-block;
+    font-size: 12.5px;
+    color: #3D4A2E;
+    background: #E4EBD6;
+    border-left: 3px solid var(--teal);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  .pdf-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .pdf-link:hover { background: var(--orange); color: var(--paper); }
+  .pdf-link--off {
+    border-color: #C9C1A8;
+    color: #B4AB90;
+    cursor: default;
+  }
+
+  .empty {
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 10px;
+    padding: 48px 24px;
+    text-align: center;
+  }
+  .empty p:first-child { margin: 0 0 6px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+  .empty__sub { font-size: 13px; color: var(--ink-soft); }
+
+  @media (max-width: 720px) {
+    table, thead, tbody, tr, th, td { display: block; }
+    thead { display: none; }
+    tbody tr { border: 1px solid var(--paper-line); border-radius: 8px; margin-bottom: 12px; padding: 4px 0; }
+    tbody td { padding: 8px 14px; }
+    tbody td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #A99A7C;
+      margin-bottom: 2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <header class="titleblock">
+    <div class="titleblock__brand">
+      <span class="titleblock__mark" aria-hidden="true">⌂</span>
+      <div>
+        <h1>Tender Watch</h1>
+        <p>Civil construction &amp; roads — Odisha</p>
+      </div>
+    </div>
+    <dl class="titleblock__meta">
+      <div><dt>Tracked</dt><dd id="meta-count">—</dd></div>
+      <div><dt>Category</dt><dd>Construction</dd></div>
+      <div><dt>Updated</dt><dd id="meta-updated">—</dd></div>
+    </dl>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search by title, department, district…" aria-label="Search tenders">
+    </div>
+
+    <div id="empty" class="empty" hidden>
+      <p>No tenders tracked yet</p>
+      <p class="empty__sub">The watcher checks every 15 minutes — this page fills in automatically once a construction-related tender comes through.</p>
+    </div>
+
+    <table id="table">
+      <thead>
+        <tr>
+          <th>Tender</th>
+          <th>Value</th>
+          <th>EMD</th>
+          <th>Eligibility</th>
+          <th>Closes</th>
+          <th>Verdict</th>
+          <th>Document</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </main>
+
+  <script>
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    async function init() {
+      let records = [];
+      try {
+        const res = await fetch('data/index.json', { cache: 'no-store' });
+        if (res.ok) records = await res.json();
+      } catch (e) {
+        // leave records empty -- empty state handles this
+      }
+
+      document.getElementById('meta-count').textContent = records.length;
+      document.getElementById('meta-updated').textContent = records[0]?.fetched_at
+        ? new Date(records[0].fetched_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+        : '—';
+
+      const tbody = document.getElementById('rows');
+      const empty = document.getElementById('empty');
+      const table = document.getElementById('table');
+
+      function render(list) {
+        tbody.innerHTML = '';
+        if (!list.length) {
+          table.hidden = true;
+          empty.hidden = false;
+          return;
+        }
+        table.hidden = false;
+        empty.hidden = true;
+        for (const r of list) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td data-label="Tender">
+              <div class="cell-title">${escapeHtml(r.title)}</div>
+              <div class="cell-sub">${escapeHtml(r.ref_no)} · ${escapeHtml(r.department_or_location)}
+                <span class="tag tag--${r.kind}">${escapeHtml(r.kind)}</span>
+              </div>
+            </td>
+            <td data-label="Value" class="mono">${escapeHtml(r.estimated_value || '—')}</td>
+            <td data-label="EMD" class="mono">${escapeHtml(r.emd_amount || '—')}</td>
+            <td data-label="Eligibility">${escapeHtml(r.eligibility || '—')}</td>
+            <td data-label="Closes" class="mono">${escapeHtml(r.closing_date || '—')}</td>
+            <td data-label="Verdict"><span class="verdict">${escapeHtml(r.verdict || '—')}</span></td>
+            <td data-label="Document">${
+              r.pdf_path
+                ? `<a class="pdf-link" href="${escapeHtml(r.pdf_path)}" target="_blank" rel="noopener">View PDF</a>`
+                : `<span class="pdf-link pdf-link--off">No PDF</span>`
+            }</td>
+          `;
+          tbody.appendChild(tr);
+        }
+      }
+
+      render(records);
+
+      document.getElementById('search').addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase();
+        render(records.filter(r =>
+          (r.title || '').toLowerCase().includes(q) ||
+          (r.department_or_location || '').toLowerCase().includes(q) ||
+          (r.ref_no || '').toLowerCase().includes(q)
+        ));
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
