@@ -1,5 +1,17 @@
 [
   {
+    "id": "a9434e868f8a",
+    "kind": "tender",
+    "title": "GHD Building at Subalaya_Building",
+    "ref_no": "ONLINE/NGRHII/07/26-27",
+    "closing_date": "24-Sep-2026 05:30 PM",
+    "opening_date": "25-Sep-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=S5pQrYVm0gO%2FHPyzHiXspvA%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-11T20:59:35.847512+00:00"
+  },
+  {
     "id": "2d775ad02fe8",
     "kind": "tender",
     "title": "R.I. office building at Khamarsahi_Building",
