@@ -1,5 +1,17 @@
 [
   {
+    "id": "fc305ca4545e",
+    "kind": "tender",
+    "title": "Police Station Building at Gania _Building",
+    "ref_no": "ONLINE/NGRHII/07/26-27",
+    "closing_date": "24-Sep-2026 05:30 PM",
+    "opening_date": "25-Sep-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SOvmv3lcsuq1FrGbvOnZwQw%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-11T23:10:42.495165+00:00"
+  },
+  {
     "id": "a9434e868f8a",
     "kind": "tender",
     "title": "GHD Building at Subalaya_Building",
