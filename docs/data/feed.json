@@ -1,5 +1,17 @@
 [
   {
+    "id": "63e3cb9ea38e",
+    "kind": "tender",
+    "title": "R.I Office building at Gania_Building",
+    "ref_no": "ONLINE/NGRHII/07/26-27",
+    "closing_date": "24-Sep-2026 05:30 PM",
+    "opening_date": "25-Sep-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SgltsyYxpUlO7yPuV6E9Icg%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-12T01:06:54.395016+00:00"
+  },
+  {
     "id": "fc305ca4545e",
     "kind": "tender",
     "title": "Police Station Building at Gania _Building",
