@@ -1,5 +1,17 @@
 [
   {
+    "id": "dbcf52082119",
+    "kind": "corrigendum",
+    "title": "Corrigendum 2 for date extension",
+    "ref_no": "WAP/CCM-C3/2026-27/OSEPA/01",
+    "closing_date": "22-Sep-2026 03:00 PM",
+    "opening_date": "23-Sep-2026 03:00 PM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink_0&page=Home&service=direct&session=T&sp=STkvHtcflu%2F8Ifm1S55GiIg%3D%3D",
+    "pdf_path": null,
+    "matched": false,
+    "fetched_at": "2026-09-15T12:13:40.345540+00:00"
+  },
+  {
     "id": "d069941d3095",
     "kind": "tender",
     "title": "Construction of Jiraguda-II Check Dam over Bamunijodi Nalla near village Jiraguda in Kundra  Block of Koraput District Under MATY 3.0",
