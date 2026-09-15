@@ -1,5 +1,29 @@
 [
   {
+    "id": "4137e05e7e82",
+    "kind": "tender",
+    "title": "Construction of 200 Seated Boys Hostel (G Plus 2) for Govt ITI Dhenkanal, Odisha",
+    "ref_no": "NBCC/SBG/Odisha/NIT/26-27/46",
+    "closing_date": "29-Sep-2026 11:00 AM",
+    "opening_date": "29-Sep-2026 11:30 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SZTtL589Vej9aDOpHXkMiUA%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-15T20:15:16.807687+00:00"
+  },
+  {
+    "id": "fcc4f7100d29",
+    "kind": "tender",
+    "title": "Construction of 100 Seated (G Plus 1) Boys Hostel for Gandhmardan ITI Titlagarh in the district of Balangir, Odisha",
+    "ref_no": "NBCC/SBG/Odisha/NIT/26-27/48",
+    "closing_date": "29-Sep-2026 11:00 AM",
+    "opening_date": "29-Sep-2026 11:30 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SHQIIsGHzU2b4wcbzFLw%2BXw%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-15T20:15:13.658188+00:00"
+  },
+  {
     "id": "dbcf52082119",
     "kind": "corrigendum",
     "title": "Corrigendum 2 for date extension",
