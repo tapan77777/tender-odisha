@@ -1,5 +1,29 @@
 [
   {
+    "id": "f5cdaa1bf69d",
+    "kind": "corrigendum",
+    "title": "Corrigendumonline12",
+    "ref_no": "Online Tender/12/SERWD-II/2026-27",
+    "closing_date": "22-Sep-2026 05:00 PM",
+    "opening_date": "23-Sep-2026 05:00 PM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink_0&page=Home&service=direct&session=T&sp=S5L9gjgBN%2FPQb0TPybk0u3w%3D%3D",
+    "pdf_path": null,
+    "matched": false,
+    "fetched_at": "2026-09-16T11:32:14.748960+00:00"
+  },
+  {
+    "id": "66f6a49021f9",
+    "kind": "corrigendum",
+    "title": "Corrigendum-3",
+    "ref_no": "CP-02/2026-27",
+    "closing_date": "23-Sep-2026 05:00 PM",
+    "opening_date": "24-Sep-2026 05:00 PM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink_0&page=Home&service=direct&session=T&sp=SxTOA00onuvPMH%2FkUs0%2FRNQ%3D%3D",
+    "pdf_path": null,
+    "matched": false,
+    "fetched_at": "2026-09-16T11:32:13.403727+00:00"
+  },
+  {
     "id": "4137e05e7e82",
     "kind": "tender",
     "title": "Construction of 200 Seated Boys Hostel (G Plus 2) for Govt ITI Dhenkanal, Odisha",
