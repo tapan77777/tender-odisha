@@ -1,5 +1,29 @@
 [
   {
+    "id": "d3500edff26d",
+    "kind": "tender",
+    "title": "Somanathapur to Tavagorada _Road_PMC and SC Coat _0.620 to 0.970",
+    "ref_no": "Tender Online-Divn.NPR-07/2026-27",
+    "closing_date": "28-Sep-2026 05:00 PM",
+    "opening_date": "29-Sep-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SlgcKsGcWMyRbI4azmZ4CvA%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-19T21:17:35.689603+00:00"
+  },
+  {
+    "id": "2abff21e92fe",
+    "kind": "tender",
+    "title": "Revitalization of the TISCO Ponds at Rourkela",
+    "ref_no": "MC/RMC/63/2026",
+    "closing_date": "03-Oct-2026 05:00 PM",
+    "opening_date": "05-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=Smp7WSt%2B026inP9FQX%2Bs%2BtA%3D%3D",
+    "pdf_path": null,
+    "matched": false,
+    "fetched_at": "2026-09-19T21:17:34.382221+00:00"
+  },
+  {
     "id": "d384e401b4c4",
     "kind": "tender",
     "title": "Alasahi to Nagar_Road_CC and Retaining Wall -40 mtr-_1.800 to 1.880",
