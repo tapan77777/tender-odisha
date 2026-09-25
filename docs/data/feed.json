@@ -1,5 +1,53 @@
 [
   {
+    "id": "5fbfa9b3e9c9",
+    "kind": "tender",
+    "title": "Waterfront Development at Gaankata, Chhatriakata in W. No. -13.",
+    "ref_no": "EO/JMC/08/2026-27",
+    "closing_date": "12-Oct-2026 06:00 PM",
+    "opening_date": "13-Oct-2026 04:00 PM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SqZbIPntF%2BxEOlpe3IpSPNg%3D%3D",
+    "pdf_path": null,
+    "matched": false,
+    "fetched_at": "2026-09-25T19:48:43.235253+00:00"
+  },
+  {
+    "id": "9d7d58c9c2ed",
+    "kind": "tender",
+    "title": "Construction of new Govt Higher Secondary School building (Science and Commerce), Hemgir block, in the district of Sundaragada for the year 2024-25",
+    "ref_no": "RWCCESNG-24 of 2026-27",
+    "closing_date": "12-Oct-2026 05:00 PM",
+    "opening_date": "13-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SWnr9uOEnauNC3lNsHUY33g%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-25T19:48:41.843257+00:00"
+  },
+  {
+    "id": "b3ef7aa5caae",
+    "kind": "tender",
+    "title": "Construction of Anasila RD road to Sunajhari road in the District of Keonjhar under DMF for the year 2025-26.",
+    "ref_no": "NCB-18/RWCKJR/2026-27",
+    "closing_date": "08-Oct-2026 05:00 PM",
+    "opening_date": "09-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SZQ%2Ba01BIQfpVjmxyhv8QHQ%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-25T19:48:40.411508+00:00"
+  },
+  {
+    "id": "1b1cfe0f866b",
+    "kind": "tender",
+    "title": "Construction of CDPO office building at Jamankira in the district of Sambalpur for the year 2025-26",
+    "ref_no": "Bldg TCN RWCSBP-22/2026-27",
+    "closing_date": "06-Oct-2026 05:00 PM",
+    "opening_date": "07-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SAZNBn%2B7BHcMtVmb0%2BSG6Yg%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-25T19:48:38.010327+00:00"
+  },
+  {
     "id": "10135ea502ad",
     "kind": "corrigendum",
     "title": "Date_Corrigendum",
