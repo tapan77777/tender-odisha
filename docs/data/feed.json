@@ -1,5 +1,53 @@
 [
   {
+    "id": "308849e94060",
+    "kind": "tender",
+    "title": "Improvement to Rimuli-Palasa road in the District of Keonjhar under MMSY-Improvement to Existing RD Roads for the year 2026-27.",
+    "ref_no": "NCB 18/RWCKJR/2026-27",
+    "closing_date": "08-Oct-2026 05:00 PM",
+    "opening_date": "09-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=StzdoZFiphReDQBih19DXOg%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-26T01:33:31.248992+00:00"
+  },
+  {
+    "id": "8c23fcf44cfe",
+    "kind": "tender",
+    "title": "Providing Laying Testing and Commissioning of 400mm DI SS K9 Pipes in raw water rising main from existing Intake well to existing UGR Paradeep",
+    "ref_no": "PC/EST/E-25/2026-27",
+    "closing_date": "12-Oct-2026 11:00 AM",
+    "opening_date": "12-Oct-2026 11:30 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=ShVTnoVwejFWvXvbexPaXPA%3D%3D",
+    "pdf_path": null,
+    "matched": false,
+    "fetched_at": "2026-09-26T01:33:19.874797+00:00"
+  },
+  {
+    "id": "b3ef7aa5caae",
+    "kind": "tender",
+    "title": "Construction of Anasila RD road to Sunajhari road in the District of Keonjhar under DMF for the year 2025-26.",
+    "ref_no": "NCB-18/RWCKJR/2026-27",
+    "closing_date": "08-Oct-2026 05:00 PM",
+    "opening_date": "09-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SZQ%2Ba01BIQfpVjmxyhv8QHQ%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-26T01:33:18.593618+00:00"
+  },
+  {
+    "id": "1b1cfe0f866b",
+    "kind": "tender",
+    "title": "Construction of CDPO office building at Jamankira in the district of Sambalpur for the year 2025-26",
+    "ref_no": "Bldg TCN RWCSBP-22/2026-27",
+    "closing_date": "06-Oct-2026 05:00 PM",
+    "opening_date": "07-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SAZNBn%2B7BHcMtVmb0%2BSG6Yg%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-09-26T01:33:08.852666+00:00"
+  },
+  {
     "id": "281de4a1f3da",
     "kind": "tender",
     "title": "Waterfront Development at Jharianair Badkata -North Side- in W. No.-08.",
