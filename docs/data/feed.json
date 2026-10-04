@@ -1,5 +1,41 @@
 [
   {
+    "id": "a4055eac2c1d",
+    "kind": "tender",
+    "title": "Construction  of  drain  near Nahaka school in ward no12",
+    "ref_no": "06/VNM/2026-27",
+    "closing_date": "26-Oct-2026 05:00 PM",
+    "opening_date": "27-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SVC54Mz%2BKeRkPnONkCcpHbA%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-10-04T16:25:35.922997+00:00"
+  },
+  {
+    "id": "e2173cf15dfc",
+    "kind": "tender",
+    "title": "BEAUTIFICATIONOF ASTAPRAHARI MANDAP IN WARD NO3",
+    "ref_no": "06/VNM/2026-27",
+    "closing_date": "26-Oct-2026 05:00 PM",
+    "opening_date": "27-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SLbsv2HF38ZB1Tmy3w5eSHA%3D%3D",
+    "pdf_path": null,
+    "matched": false,
+    "fetched_at": "2026-10-04T16:25:34.559148+00:00"
+  },
+  {
+    "id": "c6c4c4855ba6",
+    "kind": "tender",
+    "title": "Construction of Drain from near ranjit padhi house to mohanty babu house durga bihar in Ward No12",
+    "ref_no": "06/VNM/2026-27",
+    "closing_date": "26-Oct-2026 05:00 PM",
+    "opening_date": "27-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SqfwUsKwITjQ42xK0AOWctw%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-10-04T16:25:31.547466+00:00"
+  },
+  {
     "id": "5dd2a40bfe99",
     "kind": "tender",
     "title": "Devlopmentof of khereisuni temple and its arround                                                                                                                                                             Devlopmentof of khereisuni temple and its ar",
@@ -11962,41 +11998,5 @@
     "pdf_path": null,
     "matched": false,
     "fetched_at": "2026-09-10T06:20:27.797581+00:00"
-  },
-  {
-    "id": "974bee41bfce",
-    "kind": "tender",
-    "title": "Reinforcement and energisation work of Beguniabindha-I LIP under Sukruli Block in Mayurbhanj District",
-    "ref_no": "BID ID NO.25 EELID (KJA/2026-27)",
-    "closing_date": "24-Sep-2026 05:30 PM",
-    "opening_date": "25-Sep-2026 11:30 AM",
-    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SIkbIVPtFEzcC6ZA%2FliKz3Q%3D%3D",
-    "pdf_path": null,
-    "matched": false,
-    "fetched_at": "2026-09-10T06:20:24.377559+00:00"
-  },
-  {
-    "id": "28ccfdeaf7ac",
-    "kind": "tender",
-    "title": "Reinforcement and energisation work of Kalimati-III LIP under Rairangpur Block in Mayurbhanj District",
-    "ref_no": "BID ID NO.25 EELID (KJA/2026-27)",
-    "closing_date": "24-Sep-2026 05:30 PM",
-    "opening_date": "25-Sep-2026 11:30 AM",
-    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=StM6EMYEnyskmu02n%2BD8nmg%3D%3D",
-    "pdf_path": null,
-    "matched": false,
-    "fetched_at": "2026-09-10T06:20:20.401724+00:00"
-  },
-  {
-    "id": "a1ce39910e3c",
-    "kind": "tender",
-    "title": "Reinforcement and energisation work of Jhumkakudar-III LIP under Karanjia Block in Mayurbhanj District",
-    "ref_no": "BID ID NO.25 EELID (KJA/2026-27)",
-    "closing_date": "24-Sep-2026 05:30 PM",
-    "opening_date": "25-Sep-2026 11:30 AM",
-    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SMQ3D%2B%2F%2BbOgyJF4YGpbu36Q%3D%3D",
-    "pdf_path": null,
-    "matched": false,
-    "fetched_at": "2026-09-10T06:20:17.566104+00:00"
   }
 ]
