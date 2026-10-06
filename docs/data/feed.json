@@ -1,5 +1,17 @@
 [
   {
+    "id": "b6c6ab189bee",
+    "kind": "tender",
+    "title": "S/R such as repair and renovation to 4 nos Staff Quarters of D.I.E.T., Jeypore Buildings.",
+    "ref_no": "SE Rand B 20 2026 27",
+    "closing_date": "14-Oct-2026 05:00 PM",
+    "opening_date": "15-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SAUdgpobU1RGb59bUdWJQkQ%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-10-06T02:41:10.780530+00:00"
+  },
+  {
     "id": "6e83e6c564e8",
     "kind": "tender",
     "title": "STMC-For 2 nos of roads for a length of 21.878 Km under Kantabanji R and B Division(Package 3)",
@@ -11986,17 +11998,5 @@
     "pdf_path": null,
     "matched": true,
     "fetched_at": "2026-09-11T05:59:44.281696+00:00"
-  },
-  {
-    "id": "3afe5d200566",
-    "kind": "tender",
-    "title": "Restoration to Puri Main Canal from 21.400 Km. to 21.550 Km, restoration of banguary fall at RD 22.700 Km., repair of U/S and D/S head wall of drainage syphon at RD 24.405 Km. and construction of 15 nos. of bathing ghats in between Banguary to Syphon",
-    "ref_no": "SEPRD12/2026-27",
-    "closing_date": "28-Sep-2026 05:30 PM",
-    "opening_date": "29-Sep-2026 10:30 AM",
-    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SdZD6xFJ2%2BR2jPCRc8bsbOg%3D%3D",
-    "pdf_path": null,
-    "matched": true,
-    "fetched_at": "2026-09-11T05:59:38.876214+00:00"
   }
 ]
