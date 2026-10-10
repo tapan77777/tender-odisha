@@ -1,5 +1,29 @@
 [
   {
+    "id": "17e42a0ea818",
+    "kind": "tender",
+    "title": "Construction of RCC Drain of NH-57.",
+    "ref_no": "09 SE NH,BBSR OF 2026 27",
+    "closing_date": "26-Oct-2026 05:30 PM",
+    "opening_date": "27-Oct-2026 12:30 PM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SySnbcLdPBNbhvvf9KivJrA%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-10-10T01:16:59.319530+00:00"
+  },
+  {
+    "id": "d5406ff68ebd",
+    "kind": "tender",
+    "title": "Construction of Office Building of Assistant Labour Officer at Birmaharajpur Dist-Subarnapur.",
+    "ref_no": "CCE (R AND B) BGR/03/2026-27",
+    "closing_date": "26-Oct-2026 05:00 PM",
+    "opening_date": "27-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SQ40q4%2Fxa23eJRut1ksaAaQ%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-10-10T01:16:56.884162+00:00"
+  },
+  {
     "id": "e81c1533c305",
     "kind": "corrigendum",
     "title": "Corrigenum",
@@ -11974,29 +11998,5 @@
     "pdf_path": null,
     "matched": true,
     "fetched_at": "2026-09-17T15:10:37.049348+00:00"
-  },
-  {
-    "id": "22910b99f014",
-    "kind": "tender",
-    "title": "Construction of VSS building of Maa Haladigundi VSS Odakapa",
-    "ref_no": "01 of 2026-27 - 25",
-    "closing_date": "24-Sep-2026 10:30 AM",
-    "opening_date": "28-Sep-2026 11:00 AM",
-    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SYM06nvTnNmQsDGxxn2VLvQ%3D%3D",
-    "pdf_path": null,
-    "matched": true,
-    "fetched_at": "2026-09-17T15:10:32.847840+00:00"
-  },
-  {
-    "id": "bbc5c5c63324",
-    "kind": "tender",
-    "title": "Construction of VSS building at Ambapada",
-    "ref_no": "01 of 2026-27-21",
-    "closing_date": "24-Sep-2026 10:00 AM",
-    "opening_date": "28-Sep-2026 11:00 AM",
-    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SJKRNTS%2F5RQRWJXw5%2BwJfog%3D%3D",
-    "pdf_path": null,
-    "matched": true,
-    "fetched_at": "2026-09-17T15:10:28.397846+00:00"
   }
 ]
