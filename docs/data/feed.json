@@ -1,5 +1,29 @@
 [
   {
+    "id": "5ed7ba21b94f",
+    "kind": "tender",
+    "title": "Amareswar to Hirapatana_Road_SDBC_1.300 to 2.850",
+    "ref_no": "Tender Online-Divn.NPR-12/2026-27",
+    "closing_date": "15-Oct-2026 05:00 PM",
+    "opening_date": "16-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=S6qyc0120UPgzPhsrg6Gvbw%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-10-11T06:28:06.750814+00:00"
+  },
+  {
+    "id": "425b82d028e5",
+    "kind": "tender",
+    "title": "Construction of Compound Wall and Site Development work of D, E and F type Quarter and Sub-Division office at Niali for the  year 2026-27",
+    "ref_no": "RWD Ctc-14/2026-27",
+    "closing_date": "15-Oct-2026 05:00 PM",
+    "opening_date": "16-Oct-2026 11:00 AM",
+    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=S37q2sH50sHcvWKm0VTtClw%3D%3D",
+    "pdf_path": null,
+    "matched": true,
+    "fetched_at": "2026-10-11T06:28:04.188988+00:00"
+  },
+  {
     "id": "425b82d028e5",
     "kind": "tender",
     "title": "Construction of Compound Wall and Site Development work of D, E and F type Quarter and Sub-Division office at Niali for the  year 2026-27",
@@ -11974,29 +11998,5 @@
     "pdf_path": null,
     "matched": true,
     "fetched_at": "2026-09-18T09:35:52.329932+00:00"
-  },
-  {
-    "id": "dd9c3f53a2ce",
-    "kind": "tender",
-    "title": "NID-119- Improvement to NBC Right Bank from Behera Sahi to Solapur.",
-    "ref_no": "e-Procurement Notice No.- 06 of 2026-27",
-    "closing_date": "28-Sep-2026 05:30 PM",
-    "opening_date": "29-Sep-2026 11:00 AM",
-    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SW9jI8hxh3%2F8r4FY7uNnpiQ%3D%3D",
-    "pdf_path": null,
-    "matched": true,
-    "fetched_at": "2026-09-18T09:35:47.803210+00:00"
-  },
-  {
-    "id": "85c43546ab6a",
-    "kind": "tender",
-    "title": "Improvement to Rajnagar Check Dam in Jaleswar Block of Baleshwar District under Improvement to Check Dam Scheme FY 2026-27.",
-    "ref_no": "SEMIDBLS-04/2026-27",
-    "closing_date": "03-Oct-2026 05:00 PM",
-    "opening_date": "05-Oct-2026 11:00 AM",
-    "portal_url": "https://tendersodisha.gov.in/nicgep/app?component=%24DirectLink&page=Home&service=direct&session=T&sp=SYc9ZFB0ZCcqQIkVK2zua2A%3D%3D",
-    "pdf_path": null,
-    "matched": true,
-    "fetched_at": "2026-09-18T09:35:43.757851+00:00"
   }
 ]
